@@ -83,12 +83,9 @@ class CLASS_HEAD(nn.Module):
         #background bin
         self.fc_bins.append(nn.Linear(cls_last_dim, 2))
         self.num_bins = gggs_config.num_bins
-        state_dim    = gggs_config.state_dim
-        self.num_bins = gggs_config.num_bins
         #forceground bin
         for i in range(self.num_bins-1):
-            adjecent = torch.load(gggs_config.adjecent_path[i])
-            adjecent = [each.cuda() for each in adjecent]
+            adjecent = [each.cuda() for each in torch.load(gggs_config.adjecent_path[i])]
             self.fc_bins.append(GGNN(A=adjecent,
                                      fc_out_channels=fc_out_channels,
                                      n_steps=gggs_config.n_steps))
